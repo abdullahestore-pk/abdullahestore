@@ -3,62 +3,310 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abdullah E-Store | Pakistan's Premium Online Shopping Hub</title>
+    <title>Abdullah E-Store | Pakistan's Premium Daraz-Style Mall</title>
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: #f4f6f9; color: #333; }
-        .top-banner { background-color: #f1c40f; color: #000; text-align: center; padding: 10px; font-weight: bold; font-size: 14px; letter-spacing: 0.5px; }
-        header { background-color: #00401A; color: white; text-align: center; padding: 30px 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        header h1 { font-size: 32px; font-weight: 700; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
-        header p { font-size: 16px; color: #e0e0e0; font-style: italic; }
-        .container { max-width: 1200px; margin: 30px auto; padding: 0 20px; display: flex; flex-wrap: wrap; justify-content: center; gap: 25px; }
-        .product-card { background: white; border-radius: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.06); width: 280px; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease; display: flex; flex-direction: column; text-align: center; padding: 15px; }
-        .product-card:hover { transform: translateY(-8px); box-shadow: 0 10px 25px rgba(0,0,0,0.12); }
-        .product-img { width: 100%; height: 240px; object-fit: cover; border-radius: 8px; margin-bottom: 15px; }
-        .product-title { font-size: 18px; font-weight: 600; color: #222; margin-bottom: 8px; height: 45px; overflow: hidden; }
-        .product-price { font-size: 22px; font-weight: 700; color: #00401A; margin-bottom: 15px; }
-        .btn-whatsapp { background-color: #25D366; color: white; text-decoration: none; padding: 12px; border-radius: 25px; font-weight: bold; font-size: 15px; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background 0.3s; margin-top: auto; }
-        .btn-whatsapp:hover { background-color: #1ebd58; }
-        footer { background-color: #111; color: #888; text-align: center; padding: 20px; font-size: 14px; margin-top: 50px; }
-        footer strong { color: #fff; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Roboto', sans-serif; }
+        body { background-color: #f4f4f6; color: #212121; }
+        
+        /* Daraz Top Bar Menu */
+        .top-nav { background-color: #f85606; color: white; display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .logo { font-size: 24px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
+        .logo span { color: #fff; background: #111; padding: 2px 8px; border-radius: 4px; margin-left: 5px; font-size: 14px; vertical-align: middle; }
+        .cart-icon-btn { background: none; border: none; color: white; font-size: 22px; cursor: pointer; position: relative; }
+        .cart-count { position: absolute; top: -10px; right: -12px; background-color: #111; color: #fff; font-size: 12px; font-weight: bold; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+
+        /* Banner Announcement */
+        .promo-banner { background-color: #ffe8de; color: #f85606; text-align: center; padding: 10px; font-weight: 700; font-size: 13px; border-bottom: 1px solid #f85606; }
+
+        /* Product Container Grid */
+        .main-container { max-width: 1200px; margin: 20px auto; padding: 0 10px; }
+        .section-title { font-size: 20px; font-weight: 700; margin-bottom: 15px; color: #424242; border-left: 4px solid #f85606; padding-left: 10px; }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
+
+        /* Daraz-Style Product Card Design */
+        .product-card { background: white; border-radius: 4px; overflow: hidden; display: flex; flex-direction: column; transition: transform 0.2s, box-shadow 0.2s; position: relative; border: 1px solid #e2e2e2; cursor: pointer; }
+        .product-card:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0,0,0,0.1); }
+        .product-image-wrapper { width: 100%; height: 180px; background: #fff; overflow: hidden; }
+        .product-img { width: 100%; height: 100%; object-fit: cover; }
+        .discount-badge { position: absolute; top: 8px; left: 8px; background: #f85606; color: white; font-size: 11px; font-weight: bold; padding: 2px 6px; border-radius: 2px; }
+        
+        .product-info { padding: 10px; display: flex; flex-direction: column; flex-grow: 1; }
+        .product-title { font-size: 13px; color: #212121; line-height: 1.4; height: 36px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; margin-bottom: 8px; }
+        .product-price { font-size: 16px; font-weight: 700; color: #f85606; margin-bottom: 4px; }
+        .product-original-price { font-size: 12px; color: #9e9e9e; text-decoration: line-through; }
+        
+        /* Buttons Inside Card */
+        .card-buttons { display: flex; flex-direction: column; gap: 5px; margin-top: auto; }
+        .btn-add-cart { background-color: #fff; color: #f85606; border: 1px solid #f85606; padding: 8px; font-size: 12px; font-weight: bold; border-radius: 4px; cursor: pointer; transition: 0.2s; width: 100%; }
+        .btn-add-cart:hover { background-color: #f85606; color: white; }
+
+        /* Shopping Cart Sidebar Drawer */
+        .cart-drawer { position: fixed; top: 0; right: -100%; width: 100%; max-width: 380px; height: 100%; background: white; z-index: 2000; box-shadow: -5px 0 15px rgba(0,0,0,0.15); transition: right 0.3s ease; display: flex; flex-direction: column; }
+        .cart-drawer.open { right: 0; }
+        .cart-header { background: #212121; color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .cart-header h2 { font-size: 18px; }
+        .close-cart-btn { background: none; border: none; color: white; font-size: 20px; cursor: pointer; }
+        
+        .cart-items-list { padding: 15px; overflow-y: auto; flex-grow: 1; display: flex; flex-direction: column; gap: 15px; }
+        .cart-item { display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .cart-item-img { width: 50px; height: 50px; object-fit: cover; border-radius: 4px; }
+        .cart-item-details { flex-grow: 1; }
+        .cart-item-title { font-size: 12px; font-weight: bold; max-height: 32px; overflow: hidden; }
+        .cart-item-price { color: #f85606; font-size: 13px; font-weight: bold; margin-top: 2px; }
+        .remove-item-btn { background: none; border: none; color: #9e9e9e; cursor: pointer; font-size: 14px; }
+        .remove-item-btn:hover { color: #e74c3c; }
+
+        .cart-footer { padding: 15px; border-top: 1px solid #eee; background: #fafafa; }
+        .cart-total-row { display: flex; justify-content: space-between; font-size: 16px; font-weight: bold; margin-bottom: 15px; }
+        .cart-total-price { color: #f85606; }
+        .btn-checkout { background-color: #f85606; color: white; border: none; width: 100%; padding: 12px; font-size: 15px; font-weight: bold; border-radius: 4px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn-checkout:hover { background-color: #d34603; }
+
+        /* Order Form Popup Modal Box */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 3000; display: none; align-items: center; justify-content: center; padding: 15px; }
+        .modal-overlay.open { display: flex; }
+        .order-modal { background: white; border-radius: 8px; width: 100%; max-width: 400px; padding: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        .modal-title { font-size: 18px; font-weight: bold; margin-bottom: 15px; color: #212121; text-align: center; }
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; font-size: 12px; font-weight: bold; color: #666; margin-bottom: 5px; }
+        .form-group input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; }
+        .btn-submit-order { background-color: #25D366; color: white; border: none; width: 100%; padding: 12px; font-size: 15px; font-weight: bold; border-radius: 4px; cursor: pointer; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn-submit-order:hover { background-color: #1ebd58; }
+        .btn-cancel-modal { background: none; border: none; color: #666; width: 100%; text-align: center; margin-top: 10px; font-size: 13px; cursor: pointer; }
+
+        /* Floating WhatsApp Button (Bottom Left) */
+        .floating-whatsapp { position: fixed; bottom: 20px; left: 20px; background-color: #25D366; color: white; width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 1000; text-decoration: none; }
+
+        footer { background: #212121; color: #888; text-align: center; padding: 20px; font-size: 12px; margin-top: 40px; }
     </style>
 </head>
 <body>
 
-    <div class="top-banner">🚚 POORE PAKISTAN MEIN CASH ON DELIVERY (COD) DASTIYAB HAI!</div>
+    <!-- Top Promo Alert -->
+    <div class="promo-banner"><i class="fa-solid fa-truck"></i> POORE PAKISTAN MEIN CASH ON DELIVERY (COD) DASTIYAB HAI!</div>
 
-    <header>
-        <h1>Abdullah E-Store</h1>
-        <p>Your Premium Destination for Quality Products</p>
-    </header>
+    <!-- Main Header / Navbar Menu -->
+    <nav class="top-nav">
+        <div class="logo">Abdullah E-Store<span>MALL</span></div>
+        <button class="cart-icon-btn" onclick="toggleCart(true)">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span class="cart-count" id="cartCount">0</span>
+        </button>
+    </nav>
 
-    <div class="container">
+    <!-- Products Gallery Showcase -->
+    <div class="main-container">
+        <h2 class="section-title">Trending / Flash Sale Items</h2>
+        
+        <div class="products-grid">
+            
+            <!-- Product 1 -->
+            <div class="product-card">
+                <span class="discount-badge">-30%</span>
+                <div class="product-image-wrapper">
+                    <img class="product-img" src="https://images.unsplash.com/photo-1542291026-7eec264c27ff" alt="Product 1">
+                </div>
+                <div class="product-info">
+                    <div class="product-title">Premium Quality Lightweight Sports Gym Sneakers</div>
+                    <div class="product-price">Rs. 2,499</div>
+                    <div class="product-original-price">Rs. 3,500</div>
+                    <div class="card-buttons">
+                        <button class="btn-add-cart" onclick="addToCart('Premium Quality Sports Sneakers', 2499, 'https://images.unsplash.com/photo-1542291026-7eec264c27ff')"><i class="fa-solid fa-cart-plus"></i> Add To Cart</button>
+                    </div>
+                </div>
+            </div>
 
-        <!-- Product 1 -->
-        <div class="product-card">
-            <img class="product-img" src="https://images.unsplash.com/photo-1542291026-7eec264c27ff" alt="Premium Shoes">
-            <div class="product-title">Premium Quality Sneakers</div>
-            <div class="product-price">Rs. 2,499</div>
-            <a href="https://wa.me/923000000000?text=Assalam-o-Alaikum%20Abdullah%20E-Store!%20I%20want%20to%20order%20Premium%20Quality%20Sneakers%20for%20Rs.2499." target="_blank" class="btn-whatsapp">
-                💬 Order Via WhatsApp
-            </a>
+            <!-- Product 2 -->
+            <div class="product-card">
+                <span class="discount-badge">-26%</span>
+                <div class="product-image-wrapper">
+                    <img class="product-img" src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e" alt="Product 2">
+                </div>
+                <div class="product-info">
+                    <div class="product-title">High Bass Wireless Over-Ear Bluetooth Headphones</div>
+                    <div class="product-price">Rs. 1,850</div>
+                    <div class="product-original-price">Rs. 2,500</div>
+                    <div class="card-buttons">
+                        <button class="btn-add-cart" onclick="addToCart('Wireless Bluetooth Headphones', 1850, 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e')"><i class="fa-solid fa-cart-plus"></i> Add To Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="product-card">
+                <span class="discount-badge">-36%</span>
+                <div class="product-image-wrapper">
+                    <img class="product-img" src="https://images.unsplash.com/photo-1523275335684-37898b6baf30" alt="Product 3">
+                </div>
+                <div class="product-info">
+                    <div class="product-title">Luxury Bluetooth Smart Watch Series 9 Waterproof</div>
+                    <div class="product-price">Rs. 3,200</div>
+                    <div class="product-original-price">Rs. 5,000</div>
+                    <div class="card-buttons">
+                        <button class="btn-add-cart" onclick="addToCart('Luxury Smart Watch Series 9', 3200, 'https://images.unsplash.com/photo-1523275335684-37898b6baf30')"><i class="fa-solid fa-cart-plus"></i> Add To Cart</button>
+                    </div>
+                </div>
+            </div>
+
         </div>
-
-        <!-- Product 2 -->
-        <div class="product-card">
-            <img class="product-img" src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e" alt="Bluetooth Headphones">
-            <div class="product-title">Wireless Bluetooth Headphones</div>
-            <div class="product-price">Rs. 1,850</div>
-            <a href="https://wa.me/923000000000?text=Assalam-o-Alaikum%20Abdullah%20E-Store!%20I%20want%20to%20order%20Wireless%20Bluetooth%20Headphones%20for%20Rs.1850." target="_blank" class="btn-whatsapp">
-                💬 Order Via WhatsApp
-            </a>
-        </div>
-
     </div>
 
+    <!-- Cart Drawer Menu -->
+    <div class="cart-drawer" id="cartDrawer">
+        <div class="cart-header">
+            <h2><i class="fa-solid fa-cart-shopping"></i> My Cart</h2>
+            <button class="close-cart-btn" onclick="toggleCart(false)"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="cart-items-list" id="cartItemsContainer">
+            <!-- Items injected by JS -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total-row">
+                <span>Total Bill:</span>
+                <span class="cart-total-price" id="cartTotalPrice">Rs. 0</span>
+            </div>
+            <button class="btn-checkout" onclick="openOrderModal()"><i class="fa-brands fa-whatsapp"></i> Checkout Order</button>
+        </div>
+    </div>
+
+    <!-- Customer Form Modal Popup -->
+    <div class="modal-overlay" id="orderModal">
+        <div class="order-modal">
+            <div class="modal-title">Delivery Details (COD)</div>
+            <div class="form-group">
+                <label>Full Name / Aap Ka Naam</label>
+                <input type="text" id="custName" placeholder="Enter full name">
+            </div>
+            <div class="form-group">
+                <label>Mobile Number</label>
+                <input type="text" id="custPhone" placeholder="e.g. 03001234567">
+            </div>
+            <div class="form-group">
+                <label>Complete Delivery Address / Ghar Ka Pata</label>
+                <input type="text" id="custAddress" placeholder="House number, Street, Area">
+            </div>
+            <div class="form-group">
+                <label>City / Shahar</label>
+                <input type="text" id="custCity" placeholder="e.g. Bahawalpur, Lahore">
+            </div>
+            <button class="btn-submit-order" onclick="submitOrderToWhatsApp()"><i class="fa-solid fa-circle-check"></i> Confirm & Send Order</button>
+            <button class="btn-cancel-modal" onclick="closeOrderModal()">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Floating Support Button -->
+    <a href="https://wa.me/923000000000?text=Hello%20Abdullah%20E-Store!%20I%20have%20a%20question." class="floating-whatsapp" target="_blank">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
     <footer>
-        <p>&copy; 2026 <strong>Abdullah E-Store</strong>. All Rights Reserved. Built for Pakistan.</p>
+        <p>&copy; 2026 <strong>Abdullah E-Store</strong>. All Rights Reserved. Built for Pakistan E-Commerce.</p>
     </footer>
 
+    <!-- Cart Functions Logic JS -->
+    <script>
+        let cart = [];
+        // ⚠️ APNA WHATSAPP NUMBER YAHAN 92 KE SATH LIKHEIN
+        const WHATSAPP_NUMBER = "923000000000"; 
+
+        function toggleCart(show) {
+            const drawer = document.getElementById('cartDrawer');
+            if(show) drawer.classList.add('open');
+            else drawer.classList.remove('open');
+        }
+
+        function addToCart(title, price, img) {
+            cart.push({ title, price, img });
+            updateCartUI();
+            toggleCart(true);
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            document.getElementById('cartCount').innerText = Math.max(0, cart.length);
+            const container = document.getElementById('cartItemsContainer');
+            container.innerHTML = '';
+            
+            if(cart.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color:#999; margin-top:30px;">Your cart is empty!</p>';
+                document.getElementById('cartTotalPrice').innerText = 'Rs. 0';
+                return;
+            }
+
+            let total = 0;
+            cart.forEach((item, index) => {
+                total += item.price;
+                container.innerHTML += `
+                    <div class="cart-item">
+                        <img src="${item.img}" class="cart-item-img">
+                        <div class="cart-item-details">
+                            <div class="cart-item-title">${item.title}</div>
+                            <div class="cart-item-price">Rs. ${item.price.toLocaleString()}</div>
+                        </div>
+                        <button class="remove-item-btn" onclick="removeFromCart(${index})"><i class="fa-solid fa-trash-can"></i></button>
+                    </div>
+                `;
+            });
+            document.getElementById('cartTotalPrice').innerText = 'Rs. ' + total.toLocaleString();
+        }
+
+        function openOrderModal() {
+            if(cart.length === 0) {
+                alert('Aapka cart khali hai!');
+                return;
+            }
+            document.getElementById('orderModal').classList.add('open');
+        }
+
+        function closeOrderModal() {
+            document.getElementById('orderModal').classList.remove('open');
+        }
+
+        function submitOrderToWhatsApp() {
+            const name = document.getElementById('custName').value.trim();
+            const phone = document.getElementById('custPhone').value.trim();
+            const address = document.getElementById('custAddress').value.trim();
+            const city = document.getElementById('custCity').value.trim();
+
+            if(!name || !phone || !address || !city) {
+                alert('Poori details enter karein!');
+                return;
+            }
+
+            let orderText = `*--- NEW ORDER: ABDULLAH E-STORE ---*\n\n`;
+            orderText += `*Customer Details:*\n`;
+            orderText += `👤 Name: ${name}\n`;
+            orderText += `📞 Phone: ${phone}\n`;
+            orderText += `📍 Address: ${address}\n`;
+            orderText += `🏙️ City: ${city}\n\n`;
+            orderText += `*Ordered Items:*\n`;
+
+            let total = 0;
+            cart.forEach((item, index) => {
+                orderText += `${index + 1}. ${item.title} - *Rs. ${item.price}*\n`;
+                total += item.price;
+            });
+
+            orderText += `\n💰 *Total Bill: Rs. ${total}*`;
+            orderText += `\n\n*Payment:* Cash on Delivery (COD)`;
+
+            const encodedText = encodeURIComponent(orderText);
+            const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedText}`;
+            
+            window.open(whatsappUrl, '_blank');
+            
+            cart = [];
+            updateCartUI();
+            closeOrderModal();
+            toggleCart(false);
+        }
+    </script>
 </body>
 </html>
